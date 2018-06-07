@@ -22,7 +22,6 @@ class Che(ChessPiece):
             return False
         nx, ny = self.x + dx, self.y + dy
         cnt = self.count_pieces(board, self.x, self.y, dx, dy)
-        print 'cnt', cnt
         if (nx, ny) not in board.pieces:
             if cnt!= 0:
                 #print 'blocked'
@@ -31,7 +30,6 @@ class Che(ChessPiece):
             if cnt != 0:
                 #print 'cannot kill'
                 return False
-            print 'kill a chessman'
         return True
 
     def __init__(self, x, y, is_red):

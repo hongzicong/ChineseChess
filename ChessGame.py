@@ -6,7 +6,7 @@ def real_coord(x):
     if x <= 50:
         return 0
     else:
-        return (x-50)/40 + 1
+        return int((x-50)/40) + 1
 
 
 def board_coord(x):
@@ -26,7 +26,6 @@ class ChessGame:
         self.view.start()
 
     def callback(self, event):
-        print event.x, event.y
         rx, ry = real_coord(event.x), real_coord(event.y)
         if self.board.select(rx, ry, self.player_is_red):
             self.player_is_red = not self.player_is_red
