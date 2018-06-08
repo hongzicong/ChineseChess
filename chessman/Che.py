@@ -4,10 +4,10 @@ from ChessPiece import ChessPiece
 class Che(ChessPiece):
 
     def get_image_file_name(self):
-            if self.is_red:
-                return "images/redJu0.png"
-            else:
-                return "images/blackJu0.png"
+        if self.is_red:
+            return "images/red1.png"
+        else:
+            return "images/black1.png"
 
 
     def can_move(self, board, dx, dy):

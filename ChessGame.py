@@ -1,17 +1,6 @@
+from Tools import *
 from ChessBoard import *
 from ChessView import ChessView
-
-
-def real_coord(x):
-    if x <= 50:
-        return 0
-    else:
-        return int((x-50)/40) + 1
-
-
-def board_coord(x):
-    return 30 + 40*x
-
 
 class ChessGame:
 
@@ -26,7 +15,7 @@ class ChessGame:
         self.view.start()
 
     def callback(self, event):
-        rx, ry = real_coord(event.x), real_coord(event.y)
+        rx, ry = Tools.real_coord(event.x), Tools.real_coord(event.y)
         if self.board.select(rx, ry, self.player_is_red):
             self.player_is_red = not self.player_is_red
             self.view.showMsg("Red" if self.player_is_red else "Green")

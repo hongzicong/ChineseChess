@@ -6,9 +6,9 @@ class Shi(ChessPiece):
 
     def get_image_file_name(self):
         if self.is_red:
-            return "images/redShi0.png"
+            return "images/red4.png"
         else:
-            return "images/blackShi0.png"
+            return "images/black4.png"
 
 
     def can_move(self, board, dx, dy):

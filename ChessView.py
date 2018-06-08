@@ -1,8 +1,6 @@
 import tkinter
-
-
-def board_coord(x):
-    return 30 + 40*x
+from Tools import *
+from ChessItemView import  ChessItemView
 
 
 class ChessView:
@@ -20,12 +18,15 @@ class ChessView:
         self.move_images = []
         pieces = board.pieces
         for (x, y) in pieces.keys():
-            self.piece_images[x, y] = tkinter.PhotoImage(file=pieces[x, y].get_image_file_name())
-            self.can.create_image(board_coord(x), board_coord(y), image=self.piece_images[x, y])
+            item= ChessItemView(pieces[x,y])
+            self.piece_images[x, y] = item
+            self.can.create_image(Tools.board_coord(x), Tools.board_coord(y), image=item.bg)
+            self.can.create_image(Tools.board_coord(x), Tools.board_coord(y)-6, image=item.image)
         if board.selected_piece:
+            print(1111)
             for (x, y) in board.selected_piece.get_move_locs(board):
                 self.move_images.append(tkinter.PhotoImage(file="images/OOS.gif"))
-                self.can.create_image(board_coord(x), board_coord(y), image=self.move_images[-1])
+                self.can.create_image(Tools.board_coord(x), Tools.board_coord(y), image=self.move_images[-1])
     def showMsg(self, msg):
         self.root.title(msg)
     def __init__(self, control):

@@ -5,9 +5,9 @@ class Xiang(ChessPiece):
 
     def get_image_file_name(self):
         if self.is_red:
-            return "images/redXiang0.png"
+            return "images/red6.png"
         else:
-            return "images/blackXiang0.png"
+            return "images/black6.png"
 
 
     def can_move(self, board, dx, dy):

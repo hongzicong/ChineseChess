@@ -6,9 +6,9 @@ class Bing(ChessPiece):
 
     def get_image_file_name(self):
             if self.is_red:
-                return "images/redBing0.png"
+                return "images/red0.png"
             else:
-                return "images/blackBing0.png"
+                return "images/black0.png"
 
     def can_move(self, board, dx, dy):
         if abs(dx) + abs(dy) != 1:

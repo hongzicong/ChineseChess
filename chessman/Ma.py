@@ -6,9 +6,9 @@ class Ma(ChessPiece):
 
     def get_image_file_name(self):
         if self.is_red:
-            return "images/redMa0.png"
+            return "images/red2.png"
         else:
-            return "images/blackMa0.png"
+            return "images/black2.png"
 
     def can_move(self, board, dx, dy):
         x, y = self.x, self.y
