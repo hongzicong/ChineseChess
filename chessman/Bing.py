@@ -5,16 +5,10 @@ import sys
 class Bing(ChessPiece):
 
     def get_image_file_name(self):
-        if self.selected:
             if self.is_red:
-                return "images/RPS.gif"
+                return "images/redBing0.png"
             else:
-                return "images/BPS.gif"
-        else:
-            if self.is_red:
-                return "images/RP.gif"
-            else:
-                return "images/BP.gif"
+                return "images/blackBing0.png"
 
     def can_move(self, board, dx, dy):
         if abs(dx) + abs(dy) != 1:

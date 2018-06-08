@@ -5,16 +5,10 @@ class Shuai(ChessPiece):
 
     is_king = True
     def get_image_file_name(self):
-        if self.selected:
-            if self.is_red:
-                return "images/RKS.gif"
-            else:
-                return "images/BKS.gif"
+        if self.is_red:
+            return "images/redShuai0.png"
         else:
-            if self.is_red:
-                return "images/RK.gif"
-            else:
-                return "images/BK.gif"
+            return "images/blackShuai0.png"
 
 
     def can_move(self, board, dx, dy):

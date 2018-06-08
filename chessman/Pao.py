@@ -5,16 +5,10 @@ from ChessPiece import ChessPiece
 class Pao(ChessPiece):
 
     def get_image_file_name(self):
-        if self.selected:
-            if self.is_red:
-                return "images/RCS.gif"
-            else:
-                return "images/BCS.gif"
+        if self.is_red:
+            return "images/redPao0.png"
         else:
-            if self.is_red:
-                return "images/RC.gif"
-            else:
-                return "images/BC.gif"
+            return "images/blackPao0.png"
 
 
     def can_move(self, board, dx, dy):

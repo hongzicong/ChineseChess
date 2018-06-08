@@ -4,16 +4,10 @@ from ChessPiece import ChessPiece
 class Xiang(ChessPiece):
 
     def get_image_file_name(self):
-        if self.selected:
-            if self.is_red:
-                return "images/RBS.gif"
-            else:
-                return "images/BBS.gif"
+        if self.is_red:
+            return "images/redXiang0.png"
         else:
-            if self.is_red:
-                return "images/RB.gif"
-            else:
-                return "images/BB.gif"
+            return "images/blackXiang0.png"
 
 
     def can_move(self, board, dx, dy):

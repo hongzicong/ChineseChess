@@ -9,10 +9,10 @@ class ChessView:
     root = tkinter.Tk()
     root.title("Chinese Chess")
     root.resizable(0, 0)
-    can = tkinter.Canvas(root, width=373, height=410)
+    img = tkinter.PhotoImage(file="images/M_ChessBoard_Board_JDXQ.png")
+    can = tkinter.Canvas(root, width=img.width()-68*2, height=img.height()-68*2)
     can.pack(expand=tkinter.YES, fill=tkinter.BOTH)
-    img = tkinter.PhotoImage(file="images/WHITE.gif")
-    can.create_image(0, 0, image=img, anchor=tkinter.NW)
+    can.create_image(-64, -50, image=img, anchor=tkinter.NW)
     piece_images = dict()
     move_images = []
     def draw_board(self, board):
