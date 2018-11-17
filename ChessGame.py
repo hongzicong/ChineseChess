@@ -2,7 +2,6 @@ from Tools import *
 from ChessBoard import *
 from AI import AI
 from ChessView import ChessView
-import time
 
 
 class ChessGame:
@@ -22,15 +21,18 @@ class ChessGame:
         rx, ry = Tools.real_coord(event.x), Tools.real_coord(event.y)
         if self.board.select(rx, ry, self.player_is_red):
             self.player_is_red = not self.player_is_red
-            self.view.showMsg("Red" if self.player_is_red else "Green")
+            self.view.showMsg("Green")
         self.view.draw_board(self.board)
 
-        # the round of AI
-        time.sleep(1)
-        self.ai.go_next_step(self.board)
-        self.player_is_red = not self.player_is_red
-        self.view.showMsg("Red" if self.player_is_red else "Green")
-        self.view.draw_board(self.board)
+        if not self.player_is_red:
+            # the round of AI
+            list_step = self.ai.find_next_step(self.board, 2)
+            self.board.select(list_step[1][0][0], list_step[1][0][1], self.player_is_red)
+            self.board.select(list_step[1][0][0] + list_step[1][0][2], list_step[1][0][1] + list_step[1][0][3],
+                              self.player_is_red)
+            self.player_is_red = not self.player_is_red
+            self.view.showMsg("Red")
+            self.view.draw_board(self.board)
 
 
 game = ChessGame()

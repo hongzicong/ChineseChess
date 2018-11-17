@@ -1,9 +1,8 @@
 from ChessBoard import *
+import sys
 
 
 class AI:
-
-    depth = 5
 
     shi_xiang_score = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,38 +70,67 @@ class AI:
     ]
 
     @staticmethod
-    def get_score(board):
+    def get_score(pieces):
         red_score = 0
         black_score = 0
 
-        for (x, y) in board.pieces:
-            if isinstance(board.pieces[x, y], Bing) or isinstance(board.pieces[x, y], Bing):
-                if board.pieces[x, y].is_red:
+        for (x, y) in pieces:
+            if isinstance(pieces[x, y], Bing) or isinstance(pieces[x, y], Shuai):
+                if pieces[x, y].is_red:
+                    if (9, 3) in pieces:
+                        print("!!!!")
                     red_score += AI.bing_shuai_score[9 - y][x]
                 else:
                     black_score += AI.bing_shuai_score[y][x]
-            elif isinstance(board.pieces[x, y], Ma):
-                if board.pieces[x, y].is_red:
+            elif isinstance(pieces[x, y], Ma):
+                if pieces[x, y].is_red:
                     red_score += AI.ma_score[9 - y][x]
                 else:
                     black_score += AI.ma_score[y][x]
-            elif isinstance(board.pieces[x, y], Xiang) or isinstance(board.pieces[x, y], Shi):
-                if board.pieces[x, y].is_red:
+            elif isinstance(pieces[x, y], Xiang) or isinstance(pieces[x, y], Shi):
+                if pieces[x, y].is_red:
                     red_score += AI.shi_xiang_score[9 - y][x]
                 else:
                     black_score += AI.shi_xiang_score[y][x]
-            elif isinstance(board.pieces[x, y], Pao):
-                if board.pieces[x, y].is_red:
+            elif isinstance(pieces[x, y], Pao):
+                if pieces[x, y].is_red:
                     red_score += AI.pao_score[9 - y][x]
                 else:
                     black_score += AI.pao_score[y][x]
-            elif isinstance(board.pieces[x, y], Che):
-                if board.pieces[x, y].is_red:
+            elif isinstance(pieces[x, y], Che):
+                if pieces[x, y].is_red:
                     red_score += AI.che_score[9 - y][x]
                 else:
                     black_score += AI.che_score[y][x]
 
         return black_score - red_score
 
-    def go_next_step(self, board):
-        pass
+    @staticmethod
+    def find_next_step(board, depth):
+        if depth == 0:
+            return AI.get_score(board.pieces), [[]]
+
+        if depth % 2 == 0:
+            max_val = -sys.maxsize
+            max_list = []
+            for (x, y) in board.black_pieces:
+                moves = board.black_pieces[x, y].get_move_locs(board)
+                for (ex, ey) in moves:
+                    new_board = board.fake_move(x, y, ex - x, ey - y)
+                    temp, temp_list = AI.find_next_step(new_board, depth - 1)
+                    if temp > max_val:
+                        max_val = temp
+                        max_list = temp_list
+            return max_val, [[x, y, ex - x, ey - y]] + max_list
+        else:
+            min_val = sys.maxsize
+            min_list = []
+            for (x, y) in board.red_pieces:
+                moves = board.red_pieces[x, y].get_move_locs(board)
+                for (ex, ey) in moves:
+                    new_board = board.fake_move(x, y, ex - x, ey - y)
+                    temp, temp_list = AI.find_next_step(new_board, depth - 1)
+                    if temp < min_val:
+                        min_val = temp
+                        min_list = temp_list
+            return min_val, [[x, y, ex - x, ey - y]] + min_list
