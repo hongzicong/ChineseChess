@@ -26,7 +26,7 @@ class ChessGame:
 
         if not self.player_is_red:
             # the round of AI
-            list_step = self.ai.find_next_step(self.board, 2)
+            list_step = self.ai.find_next_step(self.board, 2, -sys.maxsize)
             self.board.select(list_step[1][0][0], list_step[1][0][1], self.player_is_red)
             self.board.select(list_step[1][0][0] + list_step[1][0][2], list_step[1][0][1] + list_step[1][0][3],
                               self.player_is_red)

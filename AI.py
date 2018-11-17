@@ -106,31 +106,41 @@ class AI:
         return black_score - red_score
 
     @staticmethod
-    def find_next_step(board, depth):
+    def find_next_step(board, depth, val):
         if depth == 0:
             return AI.get_score(board.pieces), [[]]
 
         if depth % 2 == 0:
+            # max layer
+            alpha_val = -sys.maxsize
             max_val = -sys.maxsize
             max_list = []
             for (x, y) in board.black_pieces:
                 moves = board.black_pieces[x, y].get_move_locs(board)
                 for (ex, ey) in moves:
                     new_board = board.fake_move(x, y, ex - x, ey - y)
-                    temp, temp_list = AI.find_next_step(new_board, depth - 1)
+                    temp, temp_list = AI.find_next_step(new_board, depth - 1, alpha_val)
+                    if temp < val:
+                        return val, []
                     if temp > max_val:
                         max_val = temp
                         max_list = temp_list
+                        alpha_val = max_val
             return max_val, [[x, y, ex - x, ey - y]] + max_list
         else:
+            # min layer
+            beta_val = sys.maxsize
             min_val = sys.maxsize
             min_list = []
             for (x, y) in board.red_pieces:
                 moves = board.red_pieces[x, y].get_move_locs(board)
                 for (ex, ey) in moves:
                     new_board = board.fake_move(x, y, ex - x, ey - y)
-                    temp, temp_list = AI.find_next_step(new_board, depth - 1)
+                    temp, temp_list = AI.find_next_step(new_board, depth - 1, beta_val)
+                    if temp > val:
+                        return val, []
                     if temp < min_val:
                         min_val = temp
                         min_list = temp_list
+                        beta_val = min_val
             return min_val, [[x, y, ex - x, ey - y]] + min_list
