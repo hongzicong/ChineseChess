@@ -16,6 +16,7 @@ class ChessBoard:
 
     pieces = dict()
 
+
     pieces[4, 0] = red_pieces[4, 0] = Shuai(4, 0, True)
     pieces[0, 3] = red_pieces[0, 3] = Bing(0, 3, True)
     pieces[2, 3] = red_pieces[2, 3] = Bing(2, 3, True)
@@ -28,10 +29,15 @@ class ChessBoard:
     pieces[5, 0] = red_pieces[5, 0] = Shi(5, 0, True)
     pieces[2, 0] = red_pieces[2, 0] = Xiang(2, 0, True)
     pieces[6, 0] = red_pieces[6, 0] = Xiang(6, 0, True)
+    
+
     pieces[1, 0] = red_pieces[1, 0] = Ma(1, 0, True)
     pieces[7, 0] = red_pieces[7, 0] = Ma(7, 0, True)
+    
     pieces[0, 0] = red_pieces[0, 0] = Che(0, 0, True)
+
     pieces[8, 0] = red_pieces[8, 0] = Che(8, 0, True)
+
 
     pieces[4, 9] = black_pieces[4, 9] = Shuai(4, 9, False)
     pieces[0, 6] = black_pieces[0, 6] = Bing(0, 6, False)
@@ -45,9 +51,11 @@ class ChessBoard:
     pieces[5, 9] = black_pieces[5, 9] = Shi(5, 9, False)
     pieces[2, 9] = black_pieces[2, 9] = Xiang(2, 9, False)
     pieces[6, 9] = black_pieces[6, 9] = Xiang(6, 9, False)
+    
     pieces[1, 9] = black_pieces[1, 9] = Ma(1, 9, False)
     pieces[7, 9] = black_pieces[7, 9] = Ma(7, 9, False)
     pieces[0, 9] = black_pieces[0, 9] = Che(0, 9, False)
+
     pieces[8, 9] = black_pieces[8, 9] = Che(8, 9, False)
 
     selected_piece = None
@@ -87,12 +95,6 @@ class ChessBoard:
             if (x, y) in self.pieces and self.pieces[x, y].is_red == player_is_red:
                 self.pieces[x, y].selected = True
                 self.selected_piece = self.pieces[x, y]
-                print("----------test---------")
-                print(self.pieces[x, y].get_move_locs(self))
-                print("%d %d" % (x, y))
-                print("%d %d" % (self.pieces[x, y].x, self.pieces[x, y].y))
-                print(self.pieces[x, y])
-                print("-----------------------")
             return False
 
         if not (x, y) in self.pieces:

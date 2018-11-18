@@ -77,8 +77,6 @@ class AI:
         for (x, y) in pieces:
             if isinstance(pieces[x, y], Bing) or isinstance(pieces[x, y], Shuai):
                 if pieces[x, y].is_red:
-                    if (9, 3) in pieces:
-                        print("!!!!")
                     red_score += AI.bing_shuai_score[9 - y][x]
                 else:
                     black_score += AI.bing_shuai_score[y][x]
@@ -113,34 +111,52 @@ class AI:
         if depth % 2 == 0:
             # max layer
             alpha_val = -sys.maxsize
+            beta_val = val
             max_val = -sys.maxsize
             max_list = []
-            for (x, y) in board.black_pieces:
-                moves = board.black_pieces[x, y].get_move_locs(board)
+            start_x = -1
+            start_y = -1
+            end_x = -1
+            end_y = -1
+            for (tx, ty) in board.black_pieces:
+                moves = board.black_pieces[tx, ty].get_move_locs(board)
                 for (ex, ey) in moves:
-                    new_board = board.fake_move(x, y, ex - x, ey - y)
+                    new_board = board.fake_move(tx, ty, ex - tx, ey - ty)
                     temp, temp_list = AI.find_next_step(new_board, depth - 1, alpha_val)
-                    if temp < val:
-                        return val, []
+                    if temp > beta_val:
+                        return temp, []
                     if temp > max_val:
                         max_val = temp
                         max_list = temp_list
                         alpha_val = max_val
-            return max_val, [[x, y, ex - x, ey - y]] + max_list
+                        start_x = tx
+                        start_y = ty
+                        end_x = ex
+                        end_y = ey
+            return max_val, [[start_x, start_y, end_x - start_x, end_y - start_y]] + max_list
         else:
             # min layer
+            alpha_val = val
             beta_val = sys.maxsize
             min_val = sys.maxsize
             min_list = []
-            for (x, y) in board.red_pieces:
-                moves = board.red_pieces[x, y].get_move_locs(board)
+            start_x = -1
+            start_y = -1
+            end_x = -1
+            end_y = -1
+            for (tx, ty) in board.red_pieces:
+                moves = board.red_pieces[tx, ty].get_move_locs(board)
                 for (ex, ey) in moves:
-                    new_board = board.fake_move(x, y, ex - x, ey - y)
+                    new_board = board.fake_move(tx, ty, ex - tx, ey - ty)
                     temp, temp_list = AI.find_next_step(new_board, depth - 1, beta_val)
-                    if temp > val:
-                        return val, []
+                    if temp < alpha_val:
+                        return temp, []
                     if temp < min_val:
                         min_val = temp
                         min_list = temp_list
                         beta_val = min_val
-            return min_val, [[x, y, ex - x, ey - y]] + min_list
+                        start_x = tx
+                        start_y = ty
+                        end_x = ex
+                        end_y = ey
+            return min_val, [[start_x, start_y, end_x - start_x, end_y - start_y]] + min_list
