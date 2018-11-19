@@ -73,9 +73,16 @@ class AI:
     def get_score(pieces):
         red_score = 0
         black_score = 0
+        black_king = False
+        red_king = True
 
         for (x, y) in pieces:
             if isinstance(pieces[x, y], Bing) or isinstance(pieces[x, y], Shuai):
+                if isinstance(pieces[x, y], Shuai):
+                    if pieces[x, y].is_red:
+                        red_king = True
+                    else:
+                        black_king = True
                 if pieces[x, y].is_red:
                     red_score += AI.bing_shuai_score[9 - y][x]
                 else:
@@ -100,6 +107,11 @@ class AI:
                     red_score += AI.che_score[9 - y][x]
                 else:
                     black_score += AI.che_score[y][x]
+
+        if not black_king:
+            return -sys.maxsize
+        elif not red_king:
+            return sys.maxsize
 
         return black_score - red_score
 
